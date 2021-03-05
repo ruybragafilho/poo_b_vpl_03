@@ -12,21 +12,32 @@ void fer_assert(const bool expr, const char* msg) {
 template <class T, unsigned N>
 void RingArray<T, N>::add(T value) {
   // TODO: implement this method.
+  fer_assert( !isFull(), "Erro: anel cheio." );
+
+  this->buf[ this->_last ] = value;
+  this->_last = (this->_last + 1 ) % N;
 }
 
 template <class T, unsigned N>
 T RingArray<T, N>::get() {
   // TODO: implement this method.
+  fer_assert( !isEmpty(), "Erro: anel vazio." );
+
+  T retorno = this->buf[ this->_first ];
+  this->_first = (this->_first + 1 ) % N;
+  return( retorno );
 }
 
 template <class T, unsigned N>
 bool RingArray<T, N>::isFull() const {
   // TODO: implement this method.
+  return( (this->_last+1) % N  ==  this->_first );
 }
 
 template <class T, unsigned N>
 bool RingArray<T, N>::isEmpty() const {
   // TODO: implement this method.
+  return( this->_first == this->_last );
 }
 
 template <class T>
